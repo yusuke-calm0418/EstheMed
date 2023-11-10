@@ -24,4 +24,27 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         return view('customers.show', ['customer' => $customer]);
     }
+
+    public function create()
+    {
+        return view('customers.create');
+    }
+
+    public function store(Request $request)
+    {
+        // インスタンスの作成
+        $customer = new Customer();
+
+        // 値の用意
+        $customer->name = $request->name;
+        $customer->gender_image = $request->gender_image;
+        $customer->gender = $request->gender;
+        $customer->last_treatment_date = $request->last_treatment_date;
+
+        // インスタンスに値を設定して保存
+        $customer->save();
+
+        // 登録したらindexに戻る
+        return redirect(route("customers.index"));
+    }
 }

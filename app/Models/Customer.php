@@ -11,10 +11,15 @@ class Customer extends Model
 
 
 
-    // 男を入力したら自動で画像が選択される
-    public function getGenderImageAttribute()
+    // 性別を日本語に変換するアクセサ
+    public function getGenderTextAttribute()
     {
-        return $this->attributes['gender'] === 'male' ? 'male_image.png' : 'female_image.png';
+        return $this->gender === 'male' ? '男' : '女';
     }
 
+    // 性別に基づいた画像ファイル名を返すアクセサ
+    public function getGenderImageAttribute()
+    {
+        return $this->gender === 'male' ? 'male_image.png' : 'female_image.png';
+    }
 }

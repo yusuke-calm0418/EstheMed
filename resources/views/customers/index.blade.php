@@ -3,28 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お客様一覧</title>
-</head>
-
-<body>
-    <h1>お客様一覧</h1>
-    <ul>
-        @foreach ($customers as $customer)
-            <!-- // リンク先をidで取得し名前で出力 -->
-            <li><a href="/customers/{{ $customer->id }}">{{ $customer->name }}</a></li>
-        @endforeach
-    </ul>
-</body>
-
-
-
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ユーザー一覧</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -32,16 +10,17 @@
 
 <body class="bg-gray-100">
     <div class="container mx-auto my-6">
-        <div class="flex justify-between items-center bg-white p-4 rounded-lg">
+        <div class="flex justify-between items-center bg-white p-4 rounded-lg shadow-lg">
             <div class="flex space-x-4">
                 <!-- Logo or Branding -->
                 <div>
-                    <img src="path-to-your-logo.png" alt="EtheMed" class="h-8"> <!-- Replace with your logo -->
+                    <img src="{{ asset('images/ethemed_logo.png') }}" alt="EtheMed" class="h-8">
+                    <!-- Replace with your logo -->
                 </div>
                 <!-- Navigation -->
                 <div class="hidden sm:flex items-center space-x-1">
-                    <a href="#" class="text-gray-500 px-3 py-2 rounded-md text-sm font-medium">データ一覧</a>
                     <a href="#" class="text-gray-500 px-3 py-2 rounded-md text-sm font-medium">お客様一覧</a>
+                    <a href="#" class="text-gray-500 px-3 py-2 rounded-md text-sm font-medium">予約一覧</a>
                     <a href="#" class="text-gray-500 px-3 py-2 rounded-md text-sm font-medium">スケジュール</a>
                     <a href="#" class="text-gray-500 px-3 py-2 rounded-md text-sm font-medium">設定</a>
                 </div>
@@ -49,7 +28,8 @@
             <!-- Search -->
             <div class="flex items-center">
                 <input class="rounded-lg border-gray-300" type="search" placeholder="検索...">
-                <button class="ml-2 text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded-lg">
+                <button class="ml-2 text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded-lg"
+                    onclick='location.href="{{ route('customers.create') }}"'>
                     お客様登録
                 </button>
             </div>
@@ -89,9 +69,14 @@
                     @foreach ($customers as $customer)
                         <tr class="hover:bg-grey-lighter clickable-row"
                             data-href='{{ url("/customers/{$customer->id}") }}'>
-                            <td class="py-4 px-6 border-b border-grey-light">{{ $customer->id }}</td>
-                            <td class="py-4 px-6 border-b border-grey-light">{{ $customer->name }}</td>
-                            <td class="py-4 px-6 border-b border-grey-light">{{ $customer->gender }}</td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                {{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</td>
+                            <td class="py-4 px-6 border-b border-grey-light text-xl flex items-center">
+                                <img src="{{ asset('images/' . $customer->gender_image) }}" alt="Gender Image"
+                                    class="h-14 w-14 mr-4"> <!-- 画像のサイズをh-12 w-12 (48px)に設定 -->
+                                <span>{{ $customer->name }}&nbsp;様</span>
+                            </td>
+                            <td class="py-4 px-6 border-b border-grey-light">{{ $customer->gender_text }}</td>
                             <td class="py-4 px-6 border-b border-grey-light">{{ $customer->birthdate }}</td>
                             <td class="py-4 px-6 border-b border-grey-light">2023年4月24日</td>
                             <td class="py-4 px-6 border-b border-grey-light">
