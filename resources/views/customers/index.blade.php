@@ -77,7 +77,13 @@
                                 <span>{{ $customer->name }}&nbsp;様</span>
                             </td>
                             <td class="py-4 px-6 border-b border-grey-light">{{ $customer->gender_text }}</td>
-                            <td class="py-4 px-6 border-b border-grey-light">{{ $customer->birthdate }}</td>
+                            <td class="py-4 px-6 border-b border-grey-light">
+                                @if ($customer->birthdate)
+                                    {{ \Carbon\Carbon::parse($customer->birthdate)->format('Y年n月j日') }}（{{ $customer->age }}才）
+                                @else
+                                    ----年--月--日
+                                @endif
+                            </td>
                             <td class="py-4 px-6 border-b border-grey-light">2023年4月24日</td>
                             <td class="py-4 px-6 border-b border-grey-light">
                                 <a href="{{ url('/customers', $customer->id) }}"

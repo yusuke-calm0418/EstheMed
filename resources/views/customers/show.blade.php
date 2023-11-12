@@ -20,13 +20,26 @@
         </div>
         <div class="flex items-center">
             <div>
-                <p class="text-gray-600">{{ $customer->birthdate }}</p>
+                <p class="text-gray-600">
+                    @if ($customer->birthdate)
+                        {{ \Carbon\Carbon::parse($customer->birthdate)->format('Y年n月j日') }}（{{ $customer->age }}才）
+                    @else
+                        ----年--月--日
+                    @endif
+                </p>
                 <div class="text-gray-700 text-sm">
                     <p>[身長] 173cm</p>
                     <p>[体重] 65kg</p>
                 </div>
             </div>
         </div>
+
+        <!-- 記録登録画面へのリンク -->
+        <div class="p-4 ml-4 font-bold">
+            <a href="{{ route('customers.records.create', $customer->id) }}"
+                class="btn btn-primary ml-2 text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded-lg">カルテ記録</a>
+        </div>
+
     </div>
 
     <div class="w-11/12 mx-auto bg-white shadow-lg rounded-lg overflow-hidden my-4">
@@ -34,23 +47,29 @@
             <div class="w-1/2 px-2 mb-4">
                 <table class="w-full text-sm text-left text-gray-500">
                     <tbody class="bg-white divide-y divide-gray-300">
-                        <tr class="">
+                        <tr>
                             <td class="py-4 px-6">ID</td>
-                            <td class="py-4 px-6 font-bold">1111</td>
+                            <td class="py-4 px-6 font-bold">{{ str_pad($customer->id, 5, '0', STR_PAD_LEFT) }}</td>
                         </tr>
                         <tr>
                             <td class="py-4 px-6">氏名</td>
                             <td class="py-4 px-6 font-bold">{{ $customer->name }}&nbsp;様</td>
                         </tr>
-                        <tr class="">
+                        <tr>
                             <td class="py-4 px-6">性別</td>
                             <td class="py-4 px-6 font-bold">{{ $customer->gender_text }}</td>
                         </tr>
                         <tr>
                             <td class="py-4 px-6">生年月日</td>
-                            <td class="py-4 px-6 font-bold">1994年7月3日</td>
+                            <td class="py-4 px-6 font-bold">
+                                @if ($customer->birthdate)
+                                    {{ \Carbon\Carbon::parse($customer->birthdate)->format('Y年n月j日') }}（{{ $customer->age }}才）
+                                @else
+                                    ----年--月--日
+                                @endif
+                            </td>
                         </tr>
-                        <tr class="">
+                        <tr>
                             <td class="py-4 px-6">住所</td>
                             <td class="py-4 px-6 font-bold">東京都渋谷区恵比寿1-33-55</td>
                         </tr>
@@ -87,10 +106,10 @@
                     <p>{{ $customer->lifestyle }}</p>
                 </div>
             </div>
-            <a href="/customers">戻る</a>
+            <a href="/customers" class="p-4">戻る</a>
+            <button onclick='location.href="{{ route('customers.edit', $customer) }}"'>編集する</button>
         </div>
     </div>
-
 </body>
 
 </html>
