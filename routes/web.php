@@ -25,13 +25,13 @@ Route::resource('customers', CustomerController::class);
 Route::resource('customers.records', RecordController::class);
 
 // 日付取得のための記録
-// Route::get('records-fetch-route', [RecordController::class, 'fetchByDate']);
+Route::get('records-fetch-route', [RecordController::class, 'fetchByDate']);
 
 // Route::get('/api/records/{start}/{end}', [RecordController::class, 'getRecordsByDateRange']);
 Route::get('/api/{customerId}/records/{start}/{end}', [RecordController::class, 'getRecordsByDateRange']);
 
 // カレンダー実装
-// Route::get('/api/records/{date}', 'RecordController@getRecordsByDate');
+Route::get('/api/records/{date}', 'RecordController@getRecordsByDate');
 
 
 Route::get('/dashboard', function () {
