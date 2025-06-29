@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
 
         // CustomerSeeder（シーダークラス）の呼び出し
         $this->call(CustomerSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }
